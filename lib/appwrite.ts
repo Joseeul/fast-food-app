@@ -1,4 +1,4 @@
-import {CreateUserParams, SignInParams} from "@/type";
+import {CreateUserParams, GetMenuParams, SignInParams} from "@/type";
 import {
     Account,
     Avatars,
@@ -17,7 +17,7 @@ export const appwriteConfig = {
     bucketId: "6899a5a6003bac386ae4",
     userCollectionId: "68983053000d387d8b8b",
     categoriesCollectionId: "68999efb0004170d5b7e",
-    menuColletionId: "6899a0ae000eab3aa7d0",
+    menuCollectionId: "6899a0ae000eab3aa7d0",
     customizationsCollectionId: "6899a2b20023ffe07920",
     menuCustomizationCollectionId: "6899a41b003a9e55ac29",
 };
@@ -90,3 +90,35 @@ export const getCurrentUser = async () => {
         throw new Error(error as string);
     }
 };
+
+export const getMenu = async ({category, query}: GetMenuParams) => {
+    try {
+        const queries: string[] = [];
+
+        if (category) queries.push(Query.equal('categories', category));
+        if (query) queries.push(Query.search('name', query));
+
+        const menus = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.menuCollectionId,
+            queries,
+        )
+
+        return menus.documents;
+    } catch (e) {
+        throw new Error(e as string);
+    }
+}
+
+export const getCategories = async () => {
+    try {
+        const categories = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.categoriesCollectionId,
+        )
+
+        return categories.documents;
+    } catch (e) {
+        throw new Error(e as string);
+    }
+}

@@ -81,7 +81,7 @@ async function seed(): Promise<void> {
     // 1. Clear all
     await clearAll(appwriteConfig.categoriesCollectionId);
     await clearAll(appwriteConfig.customizationsCollectionId);
-    await clearAll(appwriteConfig.menuColletionId);
+    await clearAll(appwriteConfig.menuCollectionId);
     await clearAll(appwriteConfig.menuCustomizationCollectionId);
     await clearStorage();
 
@@ -120,7 +120,7 @@ async function seed(): Promise<void> {
 
         const doc = await databases.createDocument(
             appwriteConfig.databaseId,
-            appwriteConfig.menuColletionId,
+            appwriteConfig.menuCollectionId,
             ID.unique(),
             {
                 name: item.name,
