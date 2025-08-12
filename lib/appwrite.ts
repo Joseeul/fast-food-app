@@ -122,3 +122,9 @@ export const getCategories = async () => {
         throw new Error(e as string);
     }
 }
+
+export const logOutUser = async () => {
+    const result = await account.deleteSession(
+        'current'
+    )
+}
